@@ -1,21 +1,26 @@
 <script lang="ts" setup>
-import {IonCard, IonIcon, IonText, IonInput} from "@ionic/vue";
-import {eyeOff} from "ionicons/icons";
+import {IonCard, IonText, IonInput} from "@ionic/vue";
 import {computed} from "vue";
 
 
 interface CardQuestionProps {
   modelValue: string,
   category: number,
+  tag: string,
   mode?: 'edit' | 'read'
 }
 
 const props = withDefaults(defineProps<CardQuestionProps>(), {mode: 'read'});
-const emit = defineEmits(['onClick', 'update:modelValue']);
+const emit = defineEmits(['onClick', 'update:modelValue', "update:tag"]);
 
 const title = computed({
   get: () => props.modelValue,
   set: (val) => emit("update:modelValue", val)
+});
+
+const _tag = computed({
+  get: () => props.tag,
+  set: (val) => emit("update:tag", val)
 });
 
 </script>
@@ -32,7 +37,13 @@ const title = computed({
     </ion-input>
 
     <ion-text class="text-xs text-degraded">Catégorie n°{{ category }}</ion-text>
-    <ion-icon :icon="eyeOff" class="absolute bottom-2 right-2" size="small"></ion-icon>
+    <ion-text v-if="mode === 'read'" class="absolute top-2 right-2">{{ _tag }}</ion-text>
+    <ion-input
+        v-else
+        v-model="_tag"
+        class="absolute top-2 right-2 w-20"
+        placeholder="Saisir un tag"
+    ></ion-input>
   </ion-card>
 </template>
 

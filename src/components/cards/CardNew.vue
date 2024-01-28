@@ -6,6 +6,8 @@ import CardQuestion from "@/components/cards/CardQuestion.vue";
 import {ref} from "vue";
 import CardAnswer from "@/components/cards/CardAnswer.vue";
 import {ToastService} from "@/services/toast.service";
+import {CardAdapter} from "@/adapters/card.adapter";
+import {CardService} from "@/services/card.service";
 
 const emits = defineEmits(['onClose', 'onCreated'])
 
@@ -15,31 +17,39 @@ enum STEPS {
 }
 
 const step = ref(STEPS.QUESTION);
-const question = ref("");
-const answer = ref("");
+const question = ref("hello"); //todo remove
+const answer = ref("hi");
+const tag = ref("tag");
 
 
-function nextStep() {
+async function nextStep() {
   if (step.value === STEPS.QUESTION) {
     if (!question.value.trim()) {
-      ToastService.error("La question ne peut pas être vide")
+      await ToastService.error("La question ne peut pas être vide")
       return;
     }
     // next step = answer
     step.value = STEPS.ANSWER;
   } else if (step.value === STEPS.ANSWER) {
     if (!answer.value.trim()) {
-      ToastService.error("La réponse ne peut pas être vide")
+      await ToastService.error("La réponse ne peut pas être vide")
       return;
     }
     // next step = creation
-    ToastService.error("Pas encore implementé");
+    const cardService = new CardService(new CardAdapter());
+    await cardService.createCard({
+      question: question.value,
+      answer: answer.value,
+      tag: tag.value,
+    });
+
     emits('onCreated', {
       question: question.value,
       answer: answer.value,
+      tag: tag.value,
     });
   } else {
-    ToastService.error("Une erreur est survenue");
+    await ToastService.error("Une erreur est survenue");
   }
 }
 
@@ -62,6 +72,7 @@ function nextStep() {
     <CardQuestion
         v-if="step === STEPS.QUESTION"
         v-model="question"
+        v-model:tag="tag"
         :category="1"
         class="mb-4"
         mode="edit"

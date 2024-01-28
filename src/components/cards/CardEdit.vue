@@ -3,7 +3,7 @@
 import CardQuestion from "@/components/cards/CardQuestion.vue";
 import CardAnswer from "@/components/cards/CardAnswer.vue";
 import {computed} from "vue";
-import {Card} from "@/models/card.model";
+import {Card} from "@/domaine/models/card.model";
 import {close} from "ionicons/icons";
 import {IonBadge, IonButton, IonFooter, IonHeader, IonIcon, IonTitle} from "@ionic/vue";
 import {ToastService} from "@/services/toast.service";
@@ -35,6 +35,7 @@ function updateCard() {
 
     <CardQuestion
         v-model="card.question"
+        v-model:tag="card.tag"
         :category="card.category"
         class="mb-4"
         mode="edit"

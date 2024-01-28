@@ -16,7 +16,7 @@ import {
   IonToolbar
 } from '@ionic/vue';
 import {onMounted, ref} from "vue";
-import {Card} from "@/models/card.model";
+import {Card} from "@/domaine/models/card.model";
 import CardQuestion from "@/components/cards/CardQuestion.vue";
 import {ToastService} from "@/services/toast.service";
 
@@ -28,63 +28,63 @@ const cards = ref<Card[]>([
     question: "Ma question un peu longue sera la suivante : qui suis-je ?",
     answer: "la réponse",
     category: 2,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs2",
     question: "ma question qsqs2",
     answer: "la réponse",
     category: 2,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs3",
     question: "ma question qsqs3",
     answer: "la réponse",
     category: 6,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs4",
     question: "ma question qsqs4",
     answer: "la réponse",
     category: 3,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs5",
     question: "ma question qsqs5",
     answer: "la réponse",
     category: 1,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs6",
     question: "ma question qsqs6",
     answer: "la réponse",
     category: 1,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs7",
     question: "ma question qsqs7",
     answer: "la réponse",
     category: 4,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs8",
     question: "ma question qsqs8",
     answer: "la réponse",
     category: 3,
-    createdAt: "12/07/23"
+    tag: "tag1"
   },
   {
     id: "qsqs9",
     question: "ma question qsqs9",
     answer: "la réponse",
     category: 2,
-    createdAt: "12/07/23"
+    tag: "tag1"
   }
 ])
 const currentCard = ref<Card>();
@@ -154,7 +154,7 @@ onMounted(() => {
 
         <ion-content class="ion-padding">
           <div v-if="currentCard" class="flex flex-col justify-center items-center">
-            <CardQuestion :category="currentCard.category" :model-value="currentCard.question"/>
+            <CardQuestion :category="currentCard.category" :model-value="currentCard.question" :tag="currentCard.tag"/>
             <ion-range class="w-full rounded" :value="answerCounter" :max="answerCounter + cards.length" disabled></ion-range>
           </div>
           <div v-else>Vous n'avez plus de question !</div>
