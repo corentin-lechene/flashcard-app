@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import {IonIcon, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel} from "@ionic/vue";
 import {eye, eyeOff} from "ionicons/icons";
-import {Card} from "@/domaine/models/card.model";
+import {Card} from "@/domain/models/card.model";
 import {ref} from "vue";
 
 

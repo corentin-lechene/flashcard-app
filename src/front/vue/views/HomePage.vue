@@ -16,9 +16,9 @@ import {
   IonToolbar
 } from '@ionic/vue';
 import {onMounted, ref} from "vue";
-import {Card} from "@/domaine/models/card.model";
-import CardQuestion from "@/components/cards/CardQuestion.vue";
-import {ToastService} from "@/services/toast.service";
+import {Card} from "@/domain/models/card.model";
+import CardQuestion from "@/front/vue/components/cards/CardQuestion.vue";
+import {ToastService} from "@/application/services/toast.service";
 
 const openCourseModal = ref(false);
 

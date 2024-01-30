@@ -1,12 +1,12 @@
 <script setup lang="ts">
 
-import CardQuestion from "@/components/cards/CardQuestion.vue";
-import CardAnswer from "@/components/cards/CardAnswer.vue";
+import CardQuestion from "@/front/vue/components/cards/CardQuestion.vue";
+import CardAnswer from "@/front/vue/components/cards/CardAnswer.vue";
 import {computed} from "vue";
-import {Card} from "@/domaine/models/card.model";
+import {Card} from "@/domain/models/card.model";
 import {close} from "ionicons/icons";
 import {IonBadge, IonButton, IonFooter, IonHeader, IonIcon, IonTitle} from "@ionic/vue";
-import {ToastService} from "@/services/toast.service";
+import {ToastService} from "@/application/services/toast.service";
 
 const props = defineProps<{modelValue: Card}>();
 const emit = defineEmits(['update:modelValue', 'onClose']);

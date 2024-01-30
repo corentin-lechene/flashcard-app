@@ -1,8 +1,8 @@
-import {CardApi} from "@/adapters/card.api";
-import {Card} from "@/domaine/models/card.model";
-import {CreatCard} from "@/services/card.service";
+import {CardApiInterface} from "@/domain/card.api.interface";
+import {Card} from "@/domain/models/card.model";
+import {CreatCard} from "@/application/services/card.service";
 
-export class CardAdapter implements CardApi {
+export class FlashcardApiCard implements CardApiInterface {
     async createCard(creatCard: CreatCard): Promise<void> {
         try {
             const url = `${import.meta.env.VITE_API_URL}/cards`;

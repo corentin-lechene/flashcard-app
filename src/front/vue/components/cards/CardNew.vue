@@ -2,12 +2,12 @@
 
 import {IonBadge, IonButton, IonFooter, IonHeader, IonIcon, IonTitle} from "@ionic/vue";
 import {arrowBack, close} from "ionicons/icons";
-import CardQuestion from "@/components/cards/CardQuestion.vue";
+import CardQuestion from "@/front/vue/components/cards/CardQuestion.vue";
 import {ref} from "vue";
-import CardAnswer from "@/components/cards/CardAnswer.vue";
-import {ToastService} from "@/services/toast.service";
-import {CardAdapter} from "@/adapters/card.adapter";
-import {CardService} from "@/services/card.service";
+import CardAnswer from "@/front/vue/components/cards/CardAnswer.vue";
+import {ToastService} from "@/application/services/toast.service";
+import {FlashcardApiCard} from "@/api/flashcard/flashcard-api-card";
+import {CardService} from "@/application/services/card.service";
 
 const emits = defineEmits(['onClose', 'onCreated'])
 
@@ -36,7 +36,7 @@ async function nextStep() {
       return;
     }
     // next step = creation
-    const cardService = new CardService(new CardAdapter());
+    const cardService = new CardService(new FlashcardApiCard());
     await cardService.createCard({
       question: question.value,
       answer: answer.value,
