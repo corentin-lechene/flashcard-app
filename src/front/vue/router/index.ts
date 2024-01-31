@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from '@ionic/vue-router';
 import {RouteRecordRaw} from 'vue-router';
-import MainLayout from '@/layouts/MainLayout.vue'
+import MainLayout from '@/front/vue/layouts/MainLayout.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -17,29 +17,29 @@ const routes: Array<RouteRecordRaw> = [
             },
             {
                 path: 'home',
-                component: () => import('@/views/HomePage.vue')
+                component: () => import('@/front/vue/views/HomePage.vue')
             },
             {
                 path: 'cards',
-                component: () => import('@/views/CardsPage.vue')
+                component: () => import('@/front/vue/views/CardsPage.vue')
             },
             {
                 path: 'settings',
-                component: () => import('@/views/SettingsPage.vue')
+                component: () => import('@/front/vue/views/SettingsPage.vue')
             }
         ]
     },
     {
         path: '/auth/login',
-        component: () => import('@/views/LoginPage.vue'),
+        component: () => import('@/front/vue/views/LoginPage.vue'),
     },
     {
         path: '/auth/sign-in',
-        component: () => import('@/views/RegisterPage.vue'),
+        component: () => import('@/front/vue/views/RegisterPage.vue'),
     },
     {
         path: '/auth/logout',
-        component: () => import('@/views/LogoutPage.vue'),
+        component: () => import('@/front/vue/views/LogoutPage.vue'),
     },
 ]
 

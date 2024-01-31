@@ -18,12 +18,13 @@ import {
 } from '@ionic/vue';
 import {onMounted, ref} from "vue";
 import {add} from "ionicons/icons";
-import CardNew from "@/components/cards/CardNew.vue";
-import {Card, Category} from "@/domaine/models/card.model";
-import CardListItem from "@/components/cards/CardListItem.vue";
-import CardEdit from "@/components/cards/CardEdit.vue";
-import {CardAdapter} from "@/adapters/card.adapter";
-import {CardService} from "@/services/card.service";
+import CardNew from "@/front/vue/components/cards/CardNew.vue";
+import {Card} from "@/domain/models/card.model";
+import CardListItem from "@/front/vue/components/cards/CardListItem.vue";
+import CardEdit from "@/front/vue/components/cards/CardEdit.vue";
+import {FlashcardApiCard} from "@/api/flashcard/flashcard-api-card";
+import {CardService} from "@/application/services/card.service";
+import {Category} from "@/domain/models/category.model";
 
 const cards = ref<Card[]>([])
 const filteringCards = ref<Card[]>([])
@@ -54,7 +55,7 @@ function onSearchCards(event: SearchbarCustomEvent) {
 onMounted(() => fetchCards());
 
 async function fetchCards() {
-  const cardService = new CardService(new CardAdapter());
+  const cardService = new CardService(new FlashcardApiCard());
   cards.value = await cardService.fetchCards();
   filteringCards.value = cards.value.slice();
   console.log(cards.value)

@@ -1,10 +1,9 @@
-import {Card, CardId} from "@/domaine/models/card.model";
-import {CreatCard} from "@/services/card.service";
+import {Card, CardId} from "@/domain/models/card.model";
+import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 
-export interface CardApi {
+export interface CardApiInterface {
     fetchCards(): Promise<Card[]>;
-
     fetchCardOfTheDay(): Promise<Card[]>;
     fetchCardById(cardId: CardId): Promise<Card>;
     createCard(creatCard: CreatCard): Promise<void>;

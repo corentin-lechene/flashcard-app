@@ -1,16 +1,9 @@
-import {CardApi} from "@/adapters/card.api";
-import {CardId} from "@/domaine/models/card.model";
-
-
-export type CreatCard = {
-    question: string;
-    answer: string;
-    tag: string;
-}
-
+import {CardApiInterface} from "@/domain/card.api.interface";
+import {CardId} from "@/domain/models/card.model";
+import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export class CardService {
-    constructor(private cardApiService: CardApi) {
+    constructor(private cardApiService: CardApiInterface) {
         this.cardApiService = cardApiService;
     }
     fetchCardOfTheDay() {
@@ -25,4 +18,5 @@ export class CardService {
     fetchCardById(cardId: CardId) {
         return this.cardApiService.fetchCardById(cardId);
     }
+
 }
