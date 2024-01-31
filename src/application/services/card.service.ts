@@ -13,7 +13,11 @@ export class CardService {
         return this.cardApiService.fetchCards();
     }
     createCard(createCard: CreatCard) {
-        return this.cardApiService.createCard(createCard);
+        if(!createCard.question.trim() || !createCard.answer.trim() || !createCard.tag.trim()) {
+            throw new Error("All fields must be fill");
+        } else {
+            return this.cardApiService.createCard(createCard);
+        }
     }
     fetchCardById(cardId: CardId) {
         return this.cardApiService.fetchCardById(cardId);

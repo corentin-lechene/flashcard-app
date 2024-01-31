@@ -11,32 +11,52 @@ import {CardService} from "@/application/services/card.service";
 
 const emits = defineEmits(['onClose', 'onCreated'])
 
+const cardService = new CardService(new FlashcardApiCard());
+
 enum STEPS {
   QUESTION,
   ANSWER
 }
 
 const step = ref(STEPS.QUESTION);
-const question = ref("hello"); //todo remove
-const answer = ref("hi");
-const tag = ref("tag");
+const question = ref("");
+const answer = ref("");
+const tag = ref("");
 
 
 async function nextStep() {
-  if (step.value === STEPS.QUESTION) {
-    if (!question.value.trim()) {
-      await ToastService.error("La question ne peut pas être vide")
-      return;
-    }
-    // next step = answer
+  switch (step.value) {
+    case STEPS.QUESTION:
+      await onStepQuestion();
+      break;
+
+    case STEPS.ANSWER:
+      await onStepAnswer();
+      break;
+
+    default:
+      await ToastService.error("Une erreur est survenue");
+  }
+}
+
+async function onStepQuestion() {
+  if (!question.value.trim() || !tag.value.trim()) {
+    await ToastService.error("La question ainsi que le tag ne peut pas être vides")
+  } else {
     step.value = STEPS.ANSWER;
-  } else if (step.value === STEPS.ANSWER) {
-    if (!answer.value.trim()) {
-      await ToastService.error("La réponse ne peut pas être vide")
-      return;
-    }
-    // next step = creation
-    const cardService = new CardService(new FlashcardApiCard());
+  }
+}
+
+async function onStepAnswer() {
+  if (!answer.value.trim()) {
+    await ToastService.error("La réponse ne peut pas être vide")
+  } else {
+    await createNewCard();
+  }
+}
+
+async function createNewCard() {
+  try {
     await cardService.createCard({
       question: question.value,
       answer: answer.value,
@@ -48,11 +68,10 @@ async function nextStep() {
       answer: answer.value,
       tag: tag.value,
     });
-  } else {
-    await ToastService.error("Une erreur est survenue");
+  } catch (e: any) {
+    await ToastService.error(e.message.toString());
   }
 }
-
 </script>
 
 <template>
