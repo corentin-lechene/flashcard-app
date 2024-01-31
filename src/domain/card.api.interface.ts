@@ -1,5 +1,5 @@
 import {Card, CardId} from "@/domain/models/card.model";
-import {CreatCard} from "@/application/services/card.service";
+import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 
 export interface CardApiInterface {

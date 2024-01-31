@@ -1,6 +1,6 @@
 import {CardApiInterface} from "@/domain/card.api.interface";
 import {Card} from "@/domain/models/card.model";
-import {CreatCard} from "@/application/services/card.service";
+import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export class FlashcardApiCard implements CardApiInterface {
     async createCard(creatCard: CreatCard): Promise<void> {
