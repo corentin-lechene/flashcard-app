@@ -1,5 +1,5 @@
 import {CardApiInterface} from "@/domain/card.api.interface";
-import {Card} from "@/domain/models/card.model";
+import {Card, CardId} from "@/domain/models/card.model";
 import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export class FlashcardApiCard implements CardApiInterface {
@@ -53,4 +53,22 @@ export class FlashcardApiCard implements CardApiInterface {
         throw new Error("Method not implemented.");
     }
 
+    async answerCard(cardId: CardId, isValid: boolean): Promise<void> {
+        const url = `${import.meta.env.VITE_API_URL}/cards/${cardId}/answer`;
+        const body = {
+            isValid: isValid
+        };
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(body)
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+    }
 }
