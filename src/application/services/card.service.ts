@@ -12,8 +12,21 @@ export class CardService {
     fetchCards() {
         return this.cardApiService.fetchCards();
     }
+
+    fetchCardsByTags(tags: string[]): Promise<Card[]> {
+        if(tags.length == 0) {
+            return this.fetchCards();
+        } else {
+            return this.cardApiService.fetchCardsByTags(tags);
+        }
+    }
+
     createCard(createCard: CreatCard) {
-        return this.cardApiService.createCard(createCard);
+        if(!createCard.question.trim() || !createCard.answer.trim() || !createCard.tag.trim()) {
+            throw new Error("All fields must be fill");
+        } else {
+            return this.cardApiService.createCard(createCard);
+        }
     }
     fetchCardById(cardId: CardId) {
         return this.cardApiService.fetchCardById(cardId);
