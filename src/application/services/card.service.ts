@@ -1,5 +1,5 @@
 import {CardApiInterface} from "@/domain/card.api.interface";
-import {CardId} from "@/domain/models/card.model";
+import {Card, CardId} from "@/domain/models/card.model";
 import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export class CardService {
@@ -19,4 +19,11 @@ export class CardService {
         return this.cardApiService.fetchCardById(cardId);
     }
 
+    async answerCard(card: Card, value: string) {
+        if(!value || !value.trim() || value.trim().toLowerCase() !== card.answer.toLowerCase()) {
+            await this.cardApiService.answerCard(card.id, false);
+            throw new Error("Wrong answer");
+        }
+        return this.cardApiService.answerCard(card.id, true);
+    }
 }

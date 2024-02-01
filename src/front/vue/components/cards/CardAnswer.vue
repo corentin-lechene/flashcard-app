@@ -19,7 +19,7 @@ const answer = computed({
 </script>
 
 <template>
-  <ion-card class="flex flex-col items-center justify-center text-center relative px-8 m-0" @click="$emit('onClick')">
+  <ion-card class="flex flex-col items-center justify-center text-center relative px-8 m-0 w-full" @click="$emit('onClick')">
     <ion-text v-if="mode === 'read'" class="text-2xl">{{ answer }}</ion-text>
     <ion-input
         v-else-if="mode === 'edit'"

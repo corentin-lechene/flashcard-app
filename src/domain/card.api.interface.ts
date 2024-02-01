@@ -9,4 +9,5 @@ export interface CardApiInterface {
     createCard(creatCard: CreatCard): Promise<void>;
     updateCard(card: Card): Promise<void>;
     deleteCard(cardId: CardId): Promise<void>;
+    answerCard(cardId: CardId, isValid: boolean): Promise<void>;
 }
