@@ -12,9 +12,8 @@ import {
   IonList,
   IonModal,
   IonPage,
-  IonSearchbar,
   IonTitle,
-  IonToolbar, SearchbarCustomEvent
+  IonToolbar
 } from '@ionic/vue';
 import {onMounted, ref} from "vue";
 import {add} from "ionicons/icons";
@@ -25,6 +24,9 @@ import CardEdit from "@/front/vue/components/cards/CardEdit.vue";
 import {FlashcardApiCard} from "@/api/flashcard/flashcard-api-card";
 import {CardService} from "@/application/services/card.service";
 import {Category} from "@/domain/models/category.model";
+import FilterDropdownTags from "@/front/vue/components/cards/FilterDropdownTags.vue";
+
+const cardService = new CardService(new FlashcardApiCard());
 
 const cards = ref<Card[]>([])
 const filteringCards = ref<Card[]>([])
@@ -34,6 +36,8 @@ const openCardEditModal = ref(false);
 const cardSelected = ref(null);
 const cardsListRef = ref();
 
+const tags = ref<string[]>([]);
+
 function removeCard(card: Card) {
   cards.value = cards.value.filter(c => c.id !== card.id);
   if(cardsListRef.value) {
@@ -41,24 +45,31 @@ function removeCard(card: Card) {
   }
 }
 
-function onSearchCards(event: SearchbarCustomEvent) {
-  filteringCards.value = cards.value
 
-  const value = event.detail?.value;
-  if(!value) return;
-
-  filteringCards.value = filteringCards.value.filter(card => card.question
-      .toLowerCase()
-      .includes(value.toLowerCase()));
-}
-
-onMounted(() => fetchCards());
+onMounted(async () => {
+  await fetchCards();
+});
 
 async function fetchCards() {
-  const cardService = new CardService(new FlashcardApiCard());
   cards.value = await cardService.fetchCards();
   filteringCards.value = cards.value.slice();
-  console.log(cards.value)
+  getTags();
+}
+
+function getTags() {
+
+  cards.value.forEach(card => {
+    const tag = card.tag.toLowerCase();
+    if(!tags.value.includes(tag)) {
+      tags.value.push(tag);
+    }
+  });
+}
+
+
+async function handleCheckBoxCardsTags (tags: string[])  {
+  filteringCards.value = await cardService.fetchCardsByTags([...tags]);
+
 }
 </script>
 
@@ -73,7 +84,6 @@ async function fetchCards() {
       <ion-header collapse="condense">
         <ion-toolbar>
           <ion-title size="large">Cartes</ion-title>
-          <ion-searchbar animated show-cancel-button="focus" @ionInput="onSearchCards($event)"></ion-searchbar>
         </ion-toolbar>
       </ion-header>
 
@@ -82,6 +92,9 @@ async function fetchCards() {
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
+
+      <FilterDropdownTags :tags="tags" @filterCards="handleCheckBoxCardsTags($event)"/>
+
 
       <ion-list ref="cardsListRef">
         <ion-item-group v-for="(_, y) in Category.DONE" :key="y">

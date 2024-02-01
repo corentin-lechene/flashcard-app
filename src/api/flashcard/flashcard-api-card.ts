@@ -49,6 +49,28 @@ export class FlashcardApiCard implements CardApiInterface {
         }
     }
 
+    async fetchCardsByTags(tags: string[]): Promise<Card[]> {
+        try {
+            const url = `${import.meta.env.VITE_API_URL}/cards?`;
+
+            let params = "";
+            params += "tags=" + tags.pop();
+            tags.forEach(tag => {
+                params+= "&";
+                params += "tags=" + tag;
+            })
+
+            const response = await fetch(url.concat(params));
+            if (!response.ok) {
+                return [];
+            }
+            return await response.json() as Card[];
+        } catch (e) {
+            console.error(e);
+            return[];
+        }
+    }
+
     updateCard(/*card: Card*/): Promise<void> {
         throw new Error("Method not implemented.");
     }

@@ -4,6 +4,7 @@ import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export interface CardApiInterface {
     fetchCards(): Promise<Card[]>;
+    fetchCardsByTags(tags: string[]): Promise<Card[]>;
     fetchCardOfTheDay(): Promise<Card[]>;
     fetchCardById(cardId: CardId): Promise<Card>;
     createCard(creatCard: CreatCard): Promise<void>;
