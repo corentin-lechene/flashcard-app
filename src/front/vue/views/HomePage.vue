@@ -99,7 +99,7 @@ onMounted(async () => {
   const cardService = new CardService(new FlashcardApiCard());
   try {
     const fetchedCards = await cardService.fetchCards();
-    if (!fetchedCards) {
+    if (fetchedCards.length !== 0) {
       cards.value = fetchedCards;
       currentCard.value = cards.value.shift();
     } else {
