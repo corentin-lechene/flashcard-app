@@ -95,14 +95,20 @@ const answer = ref("");
 const answerCounter = ref(0);
 const didAnswer = ref(false);
 
-
-onMounted(() => {
-  // const cardService = new CardService(new FlashcardApiCard());
-  //todo fetch le quizz
-  // cardService.fetchCards().then(card => {
-  //   cards.value = card;
-  //   currentCard.value = cards.value.shift();
-  // });
+onMounted(async () => {
+  const cardService = new CardService(new FlashcardApiCard());
+  try {
+    const fetchedCards = await cardService.fetchCards();
+    if (fetchedCards.length !== 0) {
+      cards.value = fetchedCards;
+      currentCard.value = cards.value.shift();
+    } else {
+      await ToastService.error("Aucune carte à afficher.");
+    }
+  } catch (e) {
+    console.error(e);
+    await ToastService.error("Erreur lors de la récupération des cartes.");
+  }
 });
 
 async function onAnswer(forceGoodAnswer = false) {
