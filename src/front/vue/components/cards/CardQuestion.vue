@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {IonCard, IonText, IonInput} from "@ionic/vue";
+import {IonCard, IonText, IonInput, IonTextarea} from "@ionic/vue";
 import {computed} from "vue";
 
 
@@ -27,21 +27,22 @@ const _tag = computed({
 
 <template>
   <ion-card class="flex flex-col items-center justify-center text-center relative px-8 m-0 w-full" @click="$emit('onClick')">
-    <ion-text v-if="mode === 'read'" class="text-2xl mb-2">{{ title }}</ion-text>
-    <ion-input
-        v-else-if="mode === 'edit'"
-        v-model="title"
+    <ion-textarea
+        v-model.trim="title"
         placeholder="Quelle est votre question ?"
+        :maxlength="70"
+        auto-grow
         class="text-2xl"
+        :readonly="mode === 'read'"
     >
-    </ion-input>
+    </ion-textarea>
 
-    <ion-text class="text-xs text-degraded">Catégorie n°{{ category }}</ion-text>
-    <ion-text v-if="mode === 'read'" class="absolute top-2 right-2">{{ _tag }}</ion-text>
+    <ion-text class="text-degraded">Catégorie n°{{ category }}</ion-text>
+    <ion-text v-if="mode === 'read'" class="absolute top-2 right-5 text-right text-lg italic">{{ _tag }}</ion-text>
     <ion-input
         v-else
-        v-model="_tag"
-        class="absolute top-2 right-2 w-20"
+        v-model.trim="_tag"
+        class="absolute top-2 right-5 text-right"
         placeholder="Saisir un tag"
     ></ion-input>
   </ion-card>

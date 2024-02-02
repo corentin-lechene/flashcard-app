@@ -32,11 +32,12 @@ export class CardService {
         return this.cardApiService.fetchCardById(cardId);
     }
 
-    async answerCard(card: Card, value: string) {
-        if(!value || !value.trim() || value.trim().toLowerCase() !== card.answer.toLowerCase()) {
-            await this.cardApiService.answerCard(card.id, false);
-            throw new Error("Wrong answer");
-        }
-        return this.cardApiService.answerCard(card.id, true);
+    checkAnswer(card: Card, answer: string) {
+        const value = answer?.trim()?.toLowerCase();
+        return value === card.answer.toLowerCase();
+    }
+
+    async answerCard(card: Card, isValid: boolean) {
+        return this.cardApiService.answerCard(card.id, isValid);
     }
 }
