@@ -1,5 +1,5 @@
 import {CardApiInterface} from "@/domain/card.api.interface";
-import {Card} from "@/domain/models/card.model";
+import {Card, CardId} from "@/domain/models/card.model";
 import {CreatCard} from "@/application/services/dto/create-card.dto";
 
 export class FlashcardApiCard implements CardApiInterface {
@@ -49,8 +49,48 @@ export class FlashcardApiCard implements CardApiInterface {
         }
     }
 
+    async fetchCardsByTags(tags: string[]): Promise<Card[]> {
+        try {
+            const url = `${import.meta.env.VITE_API_URL}/cards?`;
+
+            let params = "";
+            params += "tags=" + tags.pop();
+            tags.forEach(tag => {
+                params+= "&";
+                params += "tags=" + tag;
+            })
+
+            const response = await fetch(url.concat(params));
+            if (!response.ok) {
+                return [];
+            }
+            return await response.json() as Card[];
+        } catch (e) {
+            console.error(e);
+            return[];
+        }
+    }
+
     updateCard(/*card: Card*/): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
+    async answerCard(cardId: CardId, isValid: boolean): Promise<void> {
+        const url = `${import.meta.env.VITE_API_URL}/cards/${cardId}/answer`;
+        const body = {
+            isValid: isValid
+        };
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                "Accept": "application/json",
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify(body)
+        });
+        if (!response.ok) {
+            throw new Error();
+        }
+    }
 }
