@@ -31,3 +31,12 @@ npm-debug.log*
 /plugins
 /www
 /.env
+
+### CypressIO ###
+# gitignore template for the CypressIO, browser test framework
+# website: https://www.cypress.io/
+
+cypress/results/*
+cypress/reports/*
+cypress/screenshots/*
+cypress/videos/*
