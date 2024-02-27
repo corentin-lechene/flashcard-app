@@ -104,7 +104,7 @@ async function createNewCard() {
     />
 
     <ion-footer>
-      <ion-button expand="block" shape="round" @click.prevent="nextStep()">
+      <ion-button data-cy="on-next-step-button" expand="block" shape="round" @click.prevent="nextStep()">
         {{ step === STEPS.QUESTION ? 'Suivant' : 'Créer la carte' }}
       </ion-button>
     </ion-footer>

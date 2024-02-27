@@ -59,7 +59,7 @@ async function fetchCards() {
 function getTags() {
 
   cards.value.forEach(card => {
-    const tag = card.tag.toLowerCase();
+    const tag = card.tag;
     if(!tags.value.includes(tag)) {
       tags.value.push(tag);
     }
@@ -88,22 +88,22 @@ async function handleCheckBoxCardsTags (tags: string[])  {
       </ion-header>
 
       <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-        <ion-fab-button @click="openNewCardModal = true">
+        <ion-fab-button id="add-card-button" @click="openNewCardModal = true">
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
 
-      <FilterDropdownTags :tags="tags" @filterCards="handleCheckBoxCardsTags($event)"/>
+      <FilterDropdownTags id="fetch-card-by-tags-button" :tags="tags" @filterCards="handleCheckBoxCardsTags($event)"/>
 
 
       <ion-list ref="cardsListRef">
-        <ion-item-group v-for="(_, y) in Category.DONE" :key="y">
+        <ion-item-group v-for="(key, index) in Object.keys(Category)" :key="index">
           <ion-item-divider>
-            <ion-label>Catégorie {{ y }}</ion-label>
+            <ion-label>Catégorie {{ key }}</ion-label>
           </ion-item-divider>
 
           <CardListItem
-              v-for="(card, i) in filteringCards.filter(c => c.category === y as Category)"
+              v-for="(card, i) in filteringCards.filter(c => c.category.toString() === key)"
               :key="i"
               :card="card"
               @onRemove="removeCard($event)"
