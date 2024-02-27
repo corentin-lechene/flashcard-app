@@ -5,7 +5,7 @@ import {computed} from "vue";
 
 interface CardQuestionProps {
   modelValue: string,
-  category: number,
+  category: string,
   tag: string,
   mode?: 'edit' | 'read'
 }
