@@ -10,14 +10,14 @@ describe('open cards page', () => {
     cy.contains("ion-title", "Cartes")
 
     // all categories
-    cy.contains("ion-label", "Catégorie FIRST")
-    cy.contains("ion-label", "Catégorie SECOND")
-    cy.contains("ion-label", "Catégorie THIRD")
-    cy.contains("ion-label", "Catégorie FOURTH")
-    cy.contains("ion-label", "Catégorie FIFTH")
-    cy.contains("ion-label", "Catégorie SIXTH")
-    cy.contains("ion-label", "Catégorie SEVENTH")
-    cy.contains("ion-label", "Catégorie DONE")
+    cy.contains("ion-label", "Catégorie 1")
+    cy.contains("ion-label", "Catégorie 2")
+    cy.contains("ion-label", "Catégorie 3")
+    cy.contains("ion-label", "Catégorie 4")
+    cy.contains("ion-label", "Catégorie 5")
+    cy.contains("ion-label", "Catégorie 6")
+    cy.contains("ion-label", "Catégorie 7")
+    cy.contains("ion-label", "Terminées")
 
     cy.get('#add-card-button').should("exist");
     cy.get('#fetch-card-by-tags-button').should("exist");
