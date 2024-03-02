@@ -84,9 +84,9 @@ function nextQuestion() {
 <template>
   <ion-header>
     <ion-toolbar>
-      <ion-title>Questionnaire</ion-title>
+      <ion-title data-cy=quiz-header>Questionnaire</ion-title>
       <ion-buttons slot="end">
-        <ion-button @click="$emit('on-close')">Fermer</ion-button>
+        <ion-button data-cy="close-button" @click="$emit('on-close')">Fermer</ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -114,10 +114,11 @@ function nextQuestion() {
 
   <ion-footer>
     <ion-toolbar>
-      <ion-textarea v-if="!didAnswer" v-model="answer" :rows="3" placeholder="Votre réponse"></ion-textarea>
-      <ion-button v-if="!didAnswer" expand="block" size="small" @click="onAnswer()">Confirmer</ion-button>
+      <ion-textarea v-if="!didAnswer" v-model="answer" :rows="3" data-cy="answer-input"  placeholder="Votre réponse"></ion-textarea>
+      <ion-button v-if="!didAnswer" expand="block" size="small" data-cy="confirm-button" @click="onAnswer()">Confirmer</ion-button>
       <div v-else class="flex gap-x-1">
         <ion-button
+            data-cy="correct-answer-button"
             class="w-3/5"
             expand="block"
             size="small"
@@ -126,6 +127,7 @@ function nextQuestion() {
           C'est la bonne réponse
         </ion-button>
         <ion-button
+            data-cy="continue-button"
             class="w-2/5"
             expand="block"
             size="small"

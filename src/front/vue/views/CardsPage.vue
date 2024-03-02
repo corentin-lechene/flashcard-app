@@ -39,7 +39,8 @@ const cardsListRef = ref();
 const tags = ref<string[]>([]);
 
 function removeCard(card: Card) {
-  cards.value = cards.value.filter(c => c.id !== card.id);
+  cards.value = cards.value.filter(c => c.id.value !== card.id.value);
+  filteringCards.value = cards.value.slice();
   if(cardsListRef.value) {
     cardsListRef.value.$el.closeSlidingItems()
   }
@@ -57,9 +58,8 @@ async function fetchCards() {
 }
 
 function getTags() {
-
   cards.value.forEach(card => {
-    const tag = card.tag.toLowerCase();
+    const tag = card.tag;
     if(!tags.value.includes(tag)) {
       tags.value.push(tag);
     }
@@ -69,7 +69,6 @@ function getTags() {
 
 async function handleCheckBoxCardsTags (tags: string[])  {
   filteringCards.value = await cardService.fetchCardsByTags([...tags]);
-
 }
 </script>
 
@@ -88,22 +87,22 @@ async function handleCheckBoxCardsTags (tags: string[])  {
       </ion-header>
 
       <ion-fab slot="fixed" horizontal="end" vertical="bottom">
-        <ion-fab-button @click="openNewCardModal = true">
+        <ion-fab-button id="add-card-button" @click="openNewCardModal = true">
           <ion-icon :icon="add"></ion-icon>
         </ion-fab-button>
       </ion-fab>
 
-      <FilterDropdownTags :tags="tags" @filterCards="handleCheckBoxCardsTags($event)"/>
-
+      <FilterDropdownTags id="fetch-card-by-tags-button" :tags="tags" @filterCards="handleCheckBoxCardsTags($event)"/>
 
       <ion-list ref="cardsListRef">
-        <ion-item-group v-for="(_, y) in Category.DONE" :key="y">
+        <ion-item-group v-for="(category, y) in Object.keys(Category)" :key="y">
           <ion-item-divider>
-            <ion-label>Catégorie {{ y }}</ion-label>
+            <ion-label v-if="category !== Category.DONE">Catégorie {{y + 1}}</ion-label>
+            <ion-label v-else>Terminées</ion-label>
           </ion-item-divider>
 
           <CardListItem
-              v-for="(card, i) in filteringCards.filter(c => c.category === y as Category)"
+              v-for="(card, i) in filteringCards.filter(filteringCard => filteringCard.category === category)"
               :key="i"
               :card="card"
               @onRemove="removeCard($event)"
@@ -111,7 +110,6 @@ async function handleCheckBoxCardsTags (tags: string[])  {
           />
         </ion-item-group>
       </ion-list>
-
 
       <ion-modal
           :breakpoints="[0, 1]"

@@ -76,7 +76,7 @@ export class FlashcardApiCard implements CardApiInterface {
     }
 
     async answerCard(cardId: CardId, isValid: boolean): Promise<void> {
-        const url = `${import.meta.env.VITE_API_URL}/cards/${cardId}/answer`;
+        const url = `${import.meta.env.VITE_API_URL}/cards/${cardId.value}/answer`;
         const body = {
             isValid: isValid
         };

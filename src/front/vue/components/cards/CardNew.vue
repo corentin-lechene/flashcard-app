@@ -8,6 +8,7 @@ import CardAnswer from "@/front/vue/components/cards/CardAnswer.vue";
 import {ToastService} from "@/application/services/toast.service";
 import {FlashcardApiCard} from "@/api/flashcard/flashcard-api-card";
 import {CardService} from "@/application/services/card.service";
+import {Category} from "@/domain/models/category.model";
 
 const emits = defineEmits(['onClose', 'onCreated'])
 
@@ -92,7 +93,7 @@ async function createNewCard() {
         v-if="step === STEPS.QUESTION"
         v-model="question"
         v-model:tag="tag"
-        :category="1"
+        :category="Category.FIRST"
         class="mb-4"
         mode="edit"
     />
@@ -104,7 +105,7 @@ async function createNewCard() {
     />
 
     <ion-footer>
-      <ion-button expand="block" shape="round" @click.prevent="nextStep()">
+      <ion-button data-cy="on-next-step-button" expand="block" shape="round" @click.prevent="nextStep()">
         {{ step === STEPS.QUESTION ? 'Suivant' : 'Créer la carte' }}
       </ion-button>
     </ion-footer>

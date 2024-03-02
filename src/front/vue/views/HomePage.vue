@@ -23,7 +23,7 @@ const openQuizzModal = ref(false);
             <ion-text class="text-2xl mb-2">Répondre aux questions</ion-text>
             <ion-text class="text-xs text-degraded">Catégories</ion-text>
           </div>
-          <ion-button expand="block" size="small" @click="openQuizzModal = true">Commencer</ion-button>
+          <ion-button data-cy="start-button" expand="block" size="small" @click="openQuizzModal = true">Commencer</ion-button>
         </ion-card>
       </div>
 

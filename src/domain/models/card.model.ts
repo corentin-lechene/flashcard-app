@@ -1,6 +1,12 @@
 import {Category} from "@/domain/models/category.model";
 
-export type CardId = string;
+export class CardId {
+    readonly value: string;
+
+    constructor(value: string) {
+        this.value = value;
+    }
+}
 
 export type Card = {
     id: CardId;
