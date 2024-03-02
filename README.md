@@ -30,3 +30,7 @@ espacée” et ”d’auto-évaluation”.
     npm run dev
     ```
    et se mettre sous un format mobile pour une meilleure expérience.
+5. Lancer les tests e2e:
+    ```bash
+    npm run test:e2e
+    ```
