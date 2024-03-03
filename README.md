@@ -18,6 +18,7 @@ espacée” et ”d’auto-évaluation”.
    ```
 2. Installez les dépendances:
    ```bash
+    cd .\flashcard-app\
     npm install
     ```
 3. Créez un fichier `.env` à la racine du projet et ajoutez les variables d'environnement suivantes:
